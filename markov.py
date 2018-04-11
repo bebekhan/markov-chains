@@ -18,6 +18,12 @@ def open_and_read_file(file_path):
 
     return " ".join(expand_list)
 
+    # Alternate approch without data cleansing/stripping
+    # with open(file_path) as file_name:
+    #     file_string = file_name.read()
+
+    # return file_string
+
 open_and_read_file("green-eggs.txt")
 
 
@@ -46,46 +52,51 @@ def make_chains(text_string):
         [None]
     """
 
-
+# elif we need to acocunt, if theres is no value to get
 
     chains = {}
     count = 0
     sep_on_space = text_string.split()
 
-    while count < len(sep_on_space) - 4:
-        turn_tuple = (sep_on_space[count], sep_on_space[count+1])
+    while count < len(sep_on_space) - 2:
+        turn_tuple = (sep_on_space[count], sep_on_space[count + 1])
 
         if turn_tuple in chains.keys():
-            chains[turn_tuple] += [sep_on_space[count + 2]]
+            # chains[turn_tuple] += [sep_on_space[count + 2]]
+            chains[turn_tuple].append(sep_on_space[count + 2])
 
         else:
             chains[turn_tuple] = [sep_on_space[count + 2]]
-
+        
         count += 1
+
 
     return chains
 
 print make_chains(open_and_read_file("green-eggs.txt"))
 
-# def make_text(chains):
-#     """Return text from chains."""
+def make_text(chains):
+    """Return text from chains."""
 
-#     words = []
+    words = []
+    init_val = words.append(choice(chains.keys()))
 
-#     # your code goes here
+    # for item in chains:
+    #     for 
+    #     words.append(item.choice())
 
-#     return " ".join(words)
+    # return " ".join(words)
+    
 
+input_path = "green-eggs.txt"
 
-# input_path = "green-eggs.txt"
+# Open the file and turn it into one long string
+input_text = open_and_read_file(input_path)
 
-# # Open the file and turn it into one long string
-# input_text = open_and_read_file(input_path)
+# Get a Markov chain
+chains = make_chains(input_text)
 
-# # Get a Markov chain
-# chains = make_chains(input_text)
+# Produce random text
+random_text = make_text(chains)
 
-# # Produce random text
-# random_text = make_text(chains)
-
-# print random_text
+print random_text
